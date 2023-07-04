@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 02 Lip 2023, 14:04
+-- Czas generowania: 04 Lip 2023, 13:13
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -20,29 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `sk`
 --
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `report`
---
-
-CREATE TABLE `report` (
-  `id_report` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `surname` varchar(30) NOT NULL,
-  `phone` varchar(9) NOT NULL,
-  `model` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `comment` text DEFAULT NULL,
-  `cost` float(5,2) DEFAULT NULL,
-  `date_of_report` date DEFAULT current_timestamp(),
-  `date_of_repair` date DEFAULT NULL,
-  `id_repair` int(11) NOT NULL,
-  `id_device` int(11) NOT NULL,
-  `id_status` int(11) DEFAULT 3,
-  `id_user` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -89,6 +66,29 @@ INSERT INTO `repair_type` (`id_repair`, `name`) VALUES
 (4, 'Czyszczenie'),
 (5, 'Naprawa'),
 (6, 'Reklamacja');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `report`
+--
+
+CREATE TABLE `report` (
+  `id_report` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `surname` varchar(30) NOT NULL,
+  `phone` varchar(9) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `comment` text DEFAULT NULL,
+  `cost` float(5,2) DEFAULT NULL,
+  `date_of_report` date DEFAULT current_timestamp(),
+  `date_of_repair` date DEFAULT NULL,
+  `id_repair` int(11) NOT NULL,
+  `id_device` int(11) NOT NULL,
+  `id_status` int(11) DEFAULT 3,
+  `id_user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -146,20 +146,16 @@ CREATE TABLE `user` (
   `id_role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
+--
+-- Zrzut danych tabeli `user`
+--
+
+INSERT INTO `user` (`id_user`, `name`, `surname`, `login`, `password`, `id_role`) VALUES
+(1, 'admin', 'admin', 'admin', 'admin', 1);
 
 --
 -- Indeksy dla zrzutów tabel
 --
-
---
--- Indeksy dla tabeli `report`
---
-ALTER TABLE `report`
-  ADD PRIMARY KEY (`id_report`),
-  ADD KEY `id_device` (`id_device`),
-  ADD KEY `id_repair` (`id_repair`),
-  ADD KEY `id_status` (`id_status`),
-  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indeksy dla tabeli `device_type`
@@ -172,6 +168,16 @@ ALTER TABLE `device_type`
 --
 ALTER TABLE `repair_type`
   ADD PRIMARY KEY (`id_repair`);
+
+--
+-- Indeksy dla tabeli `report`
+--
+ALTER TABLE `report`
+  ADD PRIMARY KEY (`id_report`),
+  ADD KEY `id_device` (`id_device`),
+  ADD KEY `id_repair` (`id_repair`),
+  ADD KEY `id_status` (`id_status`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indeksy dla tabeli `role_type`
@@ -198,12 +204,6 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT dla tabeli `report`
---
-ALTER TABLE `report`
-  MODIFY `id_report` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
-
---
 -- AUTO_INCREMENT dla tabeli `device_type`
 --
 ALTER TABLE `device_type`
@@ -214,6 +214,12 @@ ALTER TABLE `device_type`
 --
 ALTER TABLE `repair_type`
   MODIFY `id_repair` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT dla tabeli `report`
+--
+ALTER TABLE `report`
+  MODIFY `id_report` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- AUTO_INCREMENT dla tabeli `role_type`
@@ -231,7 +237,7 @@ ALTER TABLE `status_type`
 -- AUTO_INCREMENT dla tabeli `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Ograniczenia dla zrzutów tabel
